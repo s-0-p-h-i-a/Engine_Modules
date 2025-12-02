@@ -1,103 +1,64 @@
-# **CLI Crankshaft + Cylinder Cycle Visualizer (Learning Project)** v0
+# **Inline-4 Crankshaft Simulation: Arduino & CLI Versions**
 
-01/12/25
+**Updated:** 01/12/2025  
+**Status:** Work in progress, conceptual prototypes
 
-This command-line program simulates a single-cylinder, 4-stroke engine cycle and displays the crankshaft and piston states using ASCII graphics.  
-
-It was built as a **training project for embedded/automotive development**, focusing on multi-file C design, modularity, and clean separation between **engine/state machine logic** and **output/actuator-like control code**.
-
-The logic design, modular structure and visual terminal output of this project lead to clear, progressive [testing phases](test_report.md): verification (link & build errors) and validation (wrong terminal output).
+This folder contains two complementary versions of an inline-4 engine crankshaft simulator: one targeting **Arduino hardware with LEDs** and one **CLI-based**, terminal visualization version. Both are learning-focused prototypes intended to explore **embedded C, state representation, multi-file project structure, and modular software design**.
 
 ---
-## Demo
+## **Overview**
 
-![Terminal window running ASCII crankshaft visualisation](demogif.gif)
+The project simulates the rotation of an inline-4 engine crankshaft through the 4-stroke cycle. Each version demonstrates **state-machine logic**, **visualization of crank positions**, and **separation of engine logic from output control**, but the implementations differ according to their output method:
 
-**Milestone:** First fully functional engine simulation demonstrating crankshaft state updates, visual output, and modular library use in a complete, running CLI prototype.
+- **Arduino Version:** Maps crankshaft state to a **2-dimensional array of LED pins** (2 rows × 4 lobes), directly interfacing with hardware.
 
----
-## **Project Goals**
+- **CLI Version:** Uses simple **boolean TDC/BDC logic** to control ASCII output, rendering each lobe as a series of hyphens or spaces in the terminal.
 
-Main objectives:
-
-### **1. Understanding multi-file structure
-
-- Splitting the codebase into a main folder with `cranklib/` and `graphics/`
-- Seeing how the compiler and linker resolve relationships across many `.h` + `.c` files
-- Designing a small “library-like” structure instead of dumping everything next to `main.c`  
-    This is meant to mirror how automotive firmware separates subsystems into modules.
-
-### **2. First steps toward custom, reusable libraries**
-
-- Treating folders as small modules with their own public headers and private implementation
-- Building a controlled public API (clean function prototypes, shared enums, structs)
-- Preparing a structure that can later be ported to C++ classes/namespaces  
-
-### **3. Separating state-machine logic from output handling**
-
-This is meant to mirror the real ECU split between:
-
-**Virtual model / state machine**
-
-- Crankshaft lobe position (TDC/BDC)
-- High-level 4-stroke phase logic
-
-**Actuator/output control layer**
-
-- Terminal ASCII graphics act as a stand-in for “actuators” (valve commands, injector timing, etc.)
-- The graphics layer never computes engine logic; it only reacts to it to it
-- `main.c` orchestrates the flow, similar to an ECU event loop
-
-This is meant to emulate the architectural philosophy seen in engine control modules (ignition, injection, and valve-control systems): **compute state → translate to outputs**.
-
-### **4. Practicing a lightweight visual layer through ASCII graphics**
-
-While primitive, the ASCII renderer trains the idea that:
-
-- The internal model owns the truth
-- A separate interface layer decides _how to present_ or _how to actuate_
-- Redrawing the terminal is analogous to sending fresh commands to actuators
-
-### **5. Strengthening debugging skills with a deterministic virtual model**
-
-[Test Report](test_report.md)
-
-Simulating the engine cycle in the terminal provides:
-
-- A clean visual trace
-- Repeatable behavior
-- A simple environment to test logic changes 
+Both approaches reinforce the same underlying concepts, while giving different levels of abstraction and feedback for testing.
 
 ---
-## **How It Works**
+## **Hardware / Visualization Concepts**
 
-- The engine module updates crank/cylinder position on each cycle.
-- After every 8 cycles, the program pauses and lets the user continue or stop.
-- The graphics module converts the internal engine state into ASCII visuals.
-- ANSI escape sequences redraw the frame to keep the output readable.
+### **Arduino**
+
+- 8 LEDs (2 rows) represent TDC/BDC positions for each lobe
+- Crankshaft state determines which LEDs are on/off each loop
+- Firing order: 1-3-4-2
+- Uses arrays and enums for readable indexing of pins and lobes
+
+### **CLI**
+
+- Terminal output visualizes TDC/BDC positions per lobe with ASCII characters (`--------` for active TDC/BDC, spaces otherwise)
+- State machine logic mirrors Arduino version but without physical outputs
+- Provides a hardware-free way to test and debug engine sequencing and rotation logic
 
 ---
-## File Structure
+## **Code Structure**
 
-```
-CLI_Sim/
-│
-├── main.c                  # Central loop / orchestrator
-├── global.h/.c
-├── checkContinue.h/.c
-│
-├── cranklib/               # Engine state machine (virtual model)
-│   ├── cranklib.h
-│   ├── initCrank.c
-│   ├── spinCrank.c
-│   └── Makefile
-│
-├── graphics/               # ASCII "actuator/output layer"
-│   ├── graphicslib.h
-│   ├── spinCrankVisual.c
-│   ├── printers.c
-│   └── Makefile
-│
-└── Makefile                # Simple build system
+Both versions share the same **conceptual separation of concerns**:
 
-```
+- **Engine logic** is separated from **output control**, mirroring the abstraction layers in real automotive ECUs.
+- Both versions use enums and arrays for readable indexing and maintainable state tracking.
+- CLI version adds `checkContinue` for user-interactive pausing every few cycles.
+
+---
+## **Learning Goals**
+
+This project was designed as a hands-on exercise to:
+
+- Explore **multi-file C project structures** and folder separation
+- Understand **how the compiler and linker manage multiple `.c` and `.h` files**
+- Create **custom libraries** for engine state machine and output control
+- Practice **separating internal logic (engine state machine) from actuator/interface logic**
+- Visualize engine sequencing using **LEDs or terminal ASCII output**
+- Gain early exposure to **embedded software patterns** used in automotive ECUs
+
+> The CLI version reinforces modular design and logic testing without hardware, while the Arduino version provides real-world interfacing experience.
+
+---
+## **Next Steps / Future Work**
+
+- Extend the CLI and Arduino versions to include **full cycle phases** (Intake, Compression, Combustion, Exhaust)
+- Implement **timed rotation loops** for more realistic engine speed simulation
+- Refactor engine logic into a reusable **C/C++ library** usable for both versions
+- Introduce **multi-cylinder synchronization and expanded visualization**
