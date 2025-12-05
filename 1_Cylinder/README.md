@@ -46,15 +46,19 @@ This arrangement visually represents the cylinder’s four-stroke cycle on a bre
 
 ### Intake:
 - Intake valve open, fuel injection on, piston BDC
+
 ![Breadboard with two LEDs representing a cylinder in the intake stroke](./demos/intake.gif)
 
 - Compression: piston TDC
+
 ![Breadboard with two LEDs representing a cylinder in the compression stroke](./demos/compression.gif)
 
 - Combustion: spark plug on, piston BDC
+
 ![Breadboard with two LEDs representing a cylinder in the combustion stroke](./demos/combustion.gif)
 
 - Exhaust: exhaust valve open, piston TDC
+
 ![Breadboard with two LEDs representing a cylinder in the exhaust stroke](./demos/exhaust.gif)
 
 ---
