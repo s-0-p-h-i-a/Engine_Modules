@@ -13,33 +13,19 @@ A collection of **learning-focused engine simulation projects** in C and Arduino
 
 Current projects include:
 
-1. **Inline-4 Crankshaft Simulations, CLI (functional v0) Arduino (WIP / PoC)**
+1. **[Arduino 1-Cylinder Simulation (v0 WIP)](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/1_Cylinder)**
+    
+    - Simulates one cylinder moving through combustion cycle using LEDs and a breadboard.
+
+2. **[Inline-4 Crankshaft Simulations, CLI (functional v0) and Arduino (WIP / PoC)](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/Inline4_Crankshaft)**
 
 	- Functional CLI "sandbox" version for practice, using ASCII visuals to represent side view of the crankshaft.
+
+3. **[Inline-4 Engine CLI Simulation (v0 WIP / PoC)](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/Engine_Cycle_CLI)**
     
-    - Prototype to simulate crankshaft rotation using LEDs.
-
-    - Represents each cylinder lobe as a boolean state (TDC/BDC) and maps them to LED outputs.
-
-    - Demonstrates state-machine thinking, enum-based indexing, and multi-file C organization.
-
-    - Conceptual and not yet functional, intended as a visual, hardware-based learning exercise.
-
-2. **Inline-4 Engine CLI Simulation (v0 WIP / PoC)**
-    
-    - A command-line C application simulating a 4-stroke inline-4 engine.
-
-    - Tracks independent cylinder states, piston positions, valves, fuel injection, and spark timing.
+    - A command-line C application simulating a 4-stroke inline-4 engine via text output.
 
     - Implements a Moore-style finite state machine and a basic firing order (1-3-4-2).
-
-    - Focused on learning structs, enums, arrays, loops, and modular design, intentionally pointer-free.
-
-    - Allows step-by-step progression via CLI input.
-    
-3. **Arduino 1-Cylinder Simulation (WIP / PoC)**
-    
-    - Design plan to simulate one cylinder moving through combustion cycle using LEDs and a breadboard.
 
 4. **Arduino 4-Cylinder Simulation (Planned)**
     
