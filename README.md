@@ -13,7 +13,7 @@ A collection of **learning-focused engine simulation projects** in C and Arduino
 
 Current projects include:
 
-1. **Cylinder + Crankshaft Embedded Sytem (WIP)**
+1. **[Cylinder + Crankshaft Embedded Sytem (WIP)](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/Full_Engine)**
 
 	- Combines previously developed servo + Hall sensor flywheel RPM calculation and LED cylinder visualisation "modules" as the first step towards developing an inline-4 engine simulation embedded system. Planned additions so far are an iteration of the crankshaft simulation and DOHC camshafts.
 
