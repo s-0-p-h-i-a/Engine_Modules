@@ -142,7 +142,13 @@ Previously:
 - Issue solved! flywheelSpeed assignment in main spinflywheel, after sweepback check, separated from sweep back concern
 - The issue with this module was in flywheellib, specifically the sweep back logic which spilled over into the incrementation/decrementation. Angle being previously unsigned caused issues when/if it went below 0.
 - Main problem was basically wonky/uncoordinated angle+speed updating with unclear separation of concerns and unclear state management, all causing the logic to break down when hitting the edge angles.
-- Considered trying more verbose solutions as intermediary, but it felt like this should be able to work with a simple concise solution -> this forced me to redefine logic in a more centralised/synchronised way, reduced 'function multitasking' (eg checkDirectionToggle previously also handled the speed toggling, now it is part of the decision process to trigger toggling or not), cleaner separation of concerns/dependency structure and more holistic definition of states, where states live, how they are influenced
+- Considered trying more verbose solutions as intermediary, but preferred to look for concise solution
+	-> this forced me to redefine logic in a more centralised/synchronised way
+	- reduced 'function multitasking':
+		eg checkDirectionToggle previously also handled the speed toggling
+		-now it is part of the decision process to trigger toggling or not)
+	- cleaner separation of concerns/dependency structure
+	- more holistic definition of states, where states live, how they are influenced
 
 NOTES:
 RE: FLYWHEEL AND SERVO REINTEGRATION
@@ -163,7 +169,7 @@ RE: FLYWHEEL AND SERVO REINTEGRATION
 
 23/12
 - Changed separate if branches to if-else for the speed and pause assignment in drive
-
+g
  */
 
 #include "joystick.h"
