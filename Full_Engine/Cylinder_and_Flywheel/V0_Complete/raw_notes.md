@@ -1,10 +1,3 @@
-/*
- 
- arduino-cli compile --fqbn arduino:avr:uno Rebuild.ino
- 
- arduino-cli upload -p /dev/cu.usbmodem141011 --fqbn arduino:avr:uno .
-
-
 08/12 FIRST DRAFT REWORK
 
 MAIN CHANGES
@@ -117,7 +110,6 @@ Previously:
 - This code:
 
 		flywheelSpeed = flywheelSpeed ? speed : -speed;
-		-> ISSUE HERE: flywheelSpeed true for any non zero value?
 	
 		handleEdgeValues();
 		checkDirectionToggle();
@@ -143,13 +135,7 @@ Previously:
 - Issue solved! flywheelSpeed assignment in main spinflywheel, after sweepback check, separated from sweep back concern
 - The issue with this module was in flywheellib, specifically the sweep back logic which spilled over into the incrementation/decrementation. Angle being previously unsigned caused issues when/if it went below 0.
 - Main problem was basically wonky/uncoordinated angle+speed updating with unclear separation of concerns and unclear state management, all causing the logic to break down when hitting the edge angles.
-- Considered trying more verbose solutions as intermediary, but preferred to look for concise solution
-	-> this forced me to redefine logic in a more centralised/synchronised way
-	- reduced 'function multitasking':
-		eg checkDirectionToggle previously also handled the speed toggling
-		-now it is part of the decision process to trigger toggling or not)
-	- cleaner separation of concerns/dependency structure
-	- more holistic definition of states, where states live, how they are influenced
+- Considered trying more verbose solutions as intermediary, but it felt like this should be able to work with a simple concise solution -> this forced me to redefine logic in a more centralised/synchronised way, reduced 'function multitasking' (eg checkDirectionToggle previously also handled the speed toggling, now it is part of the decision process to trigger toggling or not), cleaner separation of concerns/dependency structure and more holistic definition of states, where states live, how they are influenced
 
 NOTES:
 RE: FLYWHEEL AND SERVO REINTEGRATION
@@ -167,34 +153,54 @@ RE: FLYWHEEL AND SERVO REINTEGRATION
 - Mental model:
 	-> two parallel lines with different step lengths
 	- the flywheel line with the speed input is sort of continuously (with changes possibly happening every 100ms) talking to the servo timeline, which in turn only 'listens' every 15ms.
+	
+RPM MODULE REBUILD NOTES:
+HALL + RPM LIBS REWRITE
+ 
+ Structure choice:
+ - Better separation of concerns, less passing variables back and forth.
+ - Move from void functions that affect global vars to return functions to feed temporary data to RPM calculation 
+ 
+ PROCESS:
+ - Start in rpmlib, find global vars from hall lib being used, switch for return funcs
+ - Central timing inside hall lib only, no 'now' usage in rpmlib
+ - Move getTimeWindow to hall lib? Hall does own time and the time window is data for rpm calc, not rpm calc itself
+ - Idea: gettimewindow as 'api call' for rpmlib, rpmlib pure rpm math from hall lib defined timing, no delta calc in rpm
+ - Right now rpmlib includes drive, but that doesnt make sense
+ - Currently rpm calculation checks if the engine is on, but this doesn't need to be done as rpm = 0 from no flywheel movement can just be baked into overall rpm calc, ie if there are no sensor reads the deltas are 0
+ - Considered making rpm unsigned now, but interested to see if any weird logic bug leads to a negative rpm, once all fully validated will make it unsigned
+ - Same for gettime window
+ - RPM lib now only accesses data from hall lib via readhallnow and gettimewindow
+ - Hall state needs to be updated at every loop, so function calls for that need to happen somewhere that always runs
+ - The reason why constant hall updates are needed is specifically for rpm calc. rpmlib already includes halllib, and getrpm runs every loop: run hall state check inside getrpm as that is what it is needed for
+ - Read hall now = hall on and !secondpass
+ - All vars in hall lib now static
+ - Hall pin enum now also static, add pinmode to inithall
+ - RPM calc: no more global rpm var, now getrpm returns value
+ - inithall redundant as vars are already initialised, remove and just pinmode in main
+ - What to do about now? Updatehall state gets now from millis at every loop, gettimewindow then uses that now in rpm calculation: the now from updatehall and gettimewindow come from the same loop
+ - Secondpass logic seems weird?
+ - Idea for secondpass logic: hall does not need to know the exact current flywheel angle, it just know it alternates between coming & going
+ - secondpass starts at 0 and toggles at every sensor pass = moving forward or backward
+ - thisrpm and lastrpm are both raw punctual rpm snapshots: give current averaged rpm to thisrpm?
+ - Pros: smoother value, maybe better for slow movement like servo
+	Cons: delayed, less detailed representation?
+- Smoother might be more visually coherent for this?
+HW INTEGRATION:
+- Serial plotter test shows secondpass constantly toggling back and forth by continuous hall sensor activation
+- How to handle non moving constant sensor input inside hall lib?
+- Fully independent or includes drive to know if engine is on or not, only calculates if it is?
+- Add debounce to read?
+- Added lasthallstate check: now secondpass doesnt jitter anymore, but it doesnt toggle either
+- Fixed if condition: now no jitter and toggles
+- New issue found: rpm stuck at 1
+- Reduced getrpm to just constant rpm calc, no hall status check. that goes in gettimewindow now
+- RPM sometimes randomly goes to 1, then back to 0 if the hall sensor passes again
+- If i do nothing (no hall sensor activation), rpm goes up by 1 every minute
+- Potential rounding down issue causing 0 output?
+- Changed logic in updatehallstate, now sensor read is only updated at every second pass (math) and secondpass toggles each time hall is on
+- Weird stuff happening with in/double/round
 
 23/12
 - Changed separate if branches to if-else for the speed and pause assignment in drive
-
-
- */
-
-#include "joystick.h"
-#include "drive.h"
-#include "cylinderVisuals.h"
-#include "servolib.h"
-#include "rpmlib.h"
-#include "plotter.h"
-
-void setup() {
-
-	Serial.begin(9600);
-	
-	pinMode(JOYSTICK_Z,INPUT);
-	
-	serv0.attach(SERVO_PIN);
-	
-	startEngineVisuals();
-}
-
-void loop() {
-	
-	driveEngine();
-	plotterDisplay();
-	getRPM();
-}
+- System now fully validated incl correct RPM calculation: tested manually using stopwatch measuring time between valid Hall sensor events
