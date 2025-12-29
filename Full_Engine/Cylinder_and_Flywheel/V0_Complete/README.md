@@ -28,6 +28,7 @@ v0 establishes a **working baseline** before architectural refinement and data-l
 
 All major behaviors were validated through:
 
+- Hardware behaviour
 - Terminal output
 - Serial plotter visualization
 - Manual cross-checking of RPM behavior

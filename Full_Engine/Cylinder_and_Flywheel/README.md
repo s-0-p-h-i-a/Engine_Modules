@@ -45,7 +45,7 @@ Fully integrated in v0, ongoing rework in v1.
 | :---------: | :----------------: | :-----------: |
 |    Idle     | 2° angle increment | 1000ms on/off |
 |   Speed 1   | 4° angle increment | 550ms on/off  |
-|   Speed 2   | 6° angle increment | 100ms on/off  |
+|   Speed 2   | 8° angle increment | 100ms on/off  |
 
 ---
 ## Code Architecture
@@ -55,7 +55,7 @@ Fully integrated in v0, ongoing rework in v1.
 * **Hall sensor module**		: provides timing events
 * **RPM calculation**			: converts timing data to speed
 * **Cylinder module**			: computes cylinder state
-* **Cylinder visualization**	         : breadboard LED output
+* **Cylinder visualization**	: breadboard LED output
 * **Joystick module**			: reads joystick input
 * **Drive module**				: on/off and speed control for the flywheel and cylinder
 * **Plotter module**			: displays data on serial plotter
@@ -64,6 +64,13 @@ Fully integrated in v0, ongoing rework in v1.
 * **Plotter interface modules**	: expose processed subsystem data for plotting and diagnostics.
 
 Modules are designed to be testable in isolation, with integration exposing timing and logic issues for refinement.
+
+---
+## Servo Powering & Integration
+
+First time working with a servo motor involved learning processes on both hardware and software levels.
+
+See [Flywheel RPM Repo](https://github.com/s-0-p-h-i-a/Flywheel_RPM_Hall_Sensor) for process and build + test plans.
 
 ---
 ## Next Steps
