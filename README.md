@@ -1,6 +1,6 @@
 # ICE Engine Simulations (WIP / PoC)
 
-A collection of **learning-focused engine simulation projects** in C and Arduino. These early-stage experiments explore **state-machine logic, modular C design, and hardware abstraction** through CLI and LED-based prototypes. Projects are conceptual and work-in-progress, demonstrating understanding of engine sequencing and embedded systems thinking. They will be iteratively refined and expanded over time.
+A collection of learning-focused engine simulation projects in C/C++ and Arduino. These early-stage experiments explore state-machine logic, modular design, and hardware abstraction through CLI and LED-based prototypes. Projects are conceptual and work-in-progress, demonstrating understanding of engine sequencing and embedded systems thinking. They will be iteratively refined and expanded over time.
 
 **Fully functional:** CLI crankshaft simulation.
 
@@ -13,21 +13,21 @@ A collection of **learning-focused engine simulation projects** in C and Arduino
 
 Current projects include:
 
-1. **[Mini ICE Enging Control Embedded Sytem](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/Full_Engine)**
+1. **[Mini Engine Control Embedded Sytem](./Full_Engine)**
 
 	- Ongoing ECU firmware-inspired engine control / behaviour simulation.
 	- Combines previously developed servo + Hall sensor flywheel RPM calculation and LED cylinder visualisation "modules". User controls engine on/off and chooses speed setting via joystick.
 	- More modules will be progressively integrated: crank, cam, valves, etc.
 
-2. **[Arduino 1-Cylinder Simulation (v0 WIP)](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/1_Cylinder)**
+2. **[Arduino 1-Cylinder Simulation (v0 WIP)](./1_Cylinder)**
     
     - Simulates one cylinder moving through combustion cycle using LEDs and a breadboard.
 
-3. **[Inline-4 Crankshaft Simulations, CLI (functional v0) and Arduino (WIP / PoC)](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/Inline4_Crankshaft)**
+3. **[Inline-4 Crankshaft Simulations, CLI (functional v0) and Arduino (WIP / PoC)](./Inline4_Crankshaft)**
 
 	- Functional CLI "sandbox" version for practice, using ASCII visuals to represent side view of the crankshaft.
 
-4. **[Inline-4 Engine CLI Simulation (v0 WIP / PoC)](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/Engine_Cycle_CLI)**
+4. **[Inline-4 Engine CLI Simulation (v0 WIP / PoC)](./Engine_Cycle_CLI)**
     
     - A command-line C application simulating a 4-stroke inline-4 engine via text output.
 
@@ -50,16 +50,16 @@ Current projects include:
 
 Each project is contained in its own folder (`v0/PoC`) to clearly separate work-in-progress experiments.
 
-Each project uses **modular C structure**, separating state representation, output handling, and core logic to mimic embedded systems best practices.
+Each project uses modular C/C++ structure, separating state representation, output handling, and core logic to mimic embedded systems best practices.
 
 ---
 ## Learning Goals / Roadmap
 
-- Practice **C programming**: structs, enums, arrays, loops, and modular design.
+- Practice C/C++ programming: structs, enums, arrays, loops, and modular design.
 
-- Explore **state-machine logic** (Moore and composite multi-lobe concepts).
+- Explore state-machine logic (Moore and composite multi-lobe concepts).
 
-- Build **hardware abstraction awareness** via Arduino simulations.
+- Build hardware abstraction awareness via Arduino simulations.
 
 - Iteratively refine projects over time:
 
@@ -74,8 +74,8 @@ Each project uses **modular C structure**, separating state representation, outp
 ---
 ## Notes
 
-- Projects may be intentionally verbose and are structured for **learning and experimentation**, not production or real-time control.
+- Projects may be intentionally verbose and are structured for learning and experimentation, not production or real-time control.
 
-- Conceptually models engine behavior and embedded logic, but does **not** simulate real engine dynamics or timing.
+- Conceptually models engine behavior and embedded logic, but does not simulate real engine dynamics or timing.
 
-- The repository serves as a **portfolio of embedded and simulation concepts**, showing progression and understanding of engine control fundamentals.
+- The repository serves as a portfolio of embedded and simulation concepts, showing progression and understanding of engine control fundamentals.

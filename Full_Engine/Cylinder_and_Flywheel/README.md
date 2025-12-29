@@ -26,8 +26,8 @@ The system is designed to be incrementally extensible, with clear separation bet
 
 Fully integrated in v0, ongoing rework in v1.
 
-- [**V0**](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/Full_Engine/Cylinder_and_Flywheel/V0_Complete): fully functioning version, verified and validated hardware integration. Documentation coming soon
-- [**V1 (WIP)**](https://github.com/s-0-p-h-i-a/ICE_Engine_Simulations/tree/main/Full_Engine/Cylinder_and_Flywheel/V1_WIP): ongoing semantic rework, adding in-code comments, and localised logic / architecture refactors
+- [**V0**](./V0_Complete): fully functioning version, verified and validated hardware integration. Documentation coming soon
+- [**V1 (WIP)**](./V1_WIP): ongoing semantic rework, adding in-code comments, and localised logic / architecture refactors
 
 ---
 ## Behaviour:
@@ -66,11 +66,16 @@ Fully integrated in v0, ongoing rework in v1.
 Modules are designed to be testable in isolation, with integration exposing timing and logic issues for refinement.
 
 ---
-## Servo Powering & Integration
+## Technical Challenges
 
-First time working with a servo motor involved learning processes on both hardware and software levels.
+See [Technical Challenges](./Technical_Challenges.md) for detailed report of issues solved during development.
 
-See [Flywheel RPM Repo](https://github.com/s-0-p-h-i-a/Flywheel_RPM_Hall_Sensor) for process and build + test plans.
+This project involved both hardware and firmware challenges, including:
+
+* Reliable servo power and incremental actuation testing
+* Hall sensor integration and RPM timing logic
+* Cylinder state initialization and timing synchronization
+* Servo sweep logic and edge-case handling
 
 ---
 ## Next Steps

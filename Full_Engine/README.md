@@ -40,5 +40,3 @@ Integrates previously separate cylinder and flywheel rpm projects into one syste
 	- RPM calculation: Hall sensor + standard servo with magnet for reference edge generation
 	- Plotter display: system data telemetry
 - v0 fully functional, v1 WIP
-
-
