@@ -13,21 +13,15 @@ A collection of learning-focused engine simulation projects in C/C++ and Arduino
 
 Current projects include:
 
-1. **[Mini Engine Control Embedded Sytem](./Full_Engine)**
-
-	- Ongoing ECU firmware-inspired engine control / behaviour simulation.
-	- Combines previously developed servo + Hall sensor flywheel RPM calculation and LED cylinder visualisation "modules". User controls engine on/off and chooses speed setting via joystick.
-	- More modules will be progressively integrated: crank, cam, valves, etc.
-
-2. **[Arduino 1-Cylinder Simulation (v0 WIP)](./1_Cylinder)**
+1. **[Arduino 1-Cylinder Simulation (v0 WIP)](./1_Cylinder)**
     
     - Simulates one cylinder moving through combustion cycle using LEDs and a breadboard.
 
-3. **[Inline-4 Crankshaft Simulations, CLI (functional v0) and Arduino (WIP / PoC)](./Inline4_Crankshaft)**
+2. **[Inline-4 Crankshaft Simulations, CLI (functional v0) and Arduino (WIP / PoC)](./Inline4_Crankshaft)**
 
 	- Functional CLI "sandbox" version for practice, using ASCII visuals to represent side view of the crankshaft.
 
-4. **[Inline-4 Engine CLI Simulation (v0 WIP / PoC)](./Engine_Cycle_CLI)**
+3. **[Inline-4 Engine CLI Simulation (v0 WIP / PoC)](./Engine_Cycle_CLI)**
     
     - A command-line C application simulating a 4-stroke inline-4 engine via text output.
 
@@ -37,11 +31,11 @@ Current projects include:
     
     - Expansion on the 1-cylinder project, simulating an inline-4 engine using an LED matrix.
 
-6. **Camshafts Simulation (Planned)**
+5. **Camshafts Simulation (Planned)**
     
     - Simulate valve distribution control in an inline-4 DOHC engine.
 
-7. **Fuel & Spark Simulation (Planned)**
+6. **Fuel & Spark Simulation (Planned)**
     
     - Simulate fuel injector and spark plug control.
 
